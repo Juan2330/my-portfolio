@@ -9,13 +9,13 @@ export default function CloudinaryImage({
     const optimizedSrc = src.replace('/upload/', `/upload/${transform}/`);
     
     return (
-        <div className="overflow-hidden">
+        <div className="overflow-hidden rounded-lg">
             <img 
-            src={optimizedSrc} 
-            alt={alt}
-            className={`${className} w-full`}
-            loading="lazy"
-            {...props}
+                src={optimizedSrc} 
+                alt={alt}
+                className={`${className} w-full h-auto object-cover`}
+                loading="lazy"
+                {...props}
             />
         </div>
     );

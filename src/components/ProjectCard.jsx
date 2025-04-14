@@ -1,11 +1,11 @@
 export default function ProjectCard({ title, description, imageUrl, projectUrl, tags, detailsUrl }) {
     return (
         <div className="bg-gray-900 rounded-lg overflow-hidden shadow-lg transition-transform hover:scale-105">
-            <div className="w-full h-[450px] md:h-[338px] overflow-hidden">
+            <div className="w-full overflow-hidden">
                 <img 
                     src={imageUrl} 
                     alt={title}
-                    className="w-full h-full object-cover"
+                    className="w-full h-auto object-cover block"
                     loading="lazy"
                 />
             </div>
