@@ -4,7 +4,13 @@ module.exports = {
     './src/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        heading: ['Anton'],
+        sans: ['Inter'],
+        mono: ['Fira Code'],
+      },
+    },
   },
   plugins: [],
 }

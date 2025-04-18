@@ -20,16 +20,16 @@ export default function ProjectDetailRana() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-6">
+    <div className="min-h-screen bg-gray-900/20 text-white p-6">
       {/* Modal para imagen ampliada */}
       {isModalOpen && (
         <div 
           className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90 p-4"
           onClick={closeModal}
         >
-          <div className="relative max-w-4xl w-full max-h-[90vh]">
+          <div className="max-w-4xl w-full max-h-[90vh]">
             <button 
-              className="absolute -top-10 right-0 text-white hover:text-yellow-300 text-3xl"
+              className="-top-10 right-0 text-white hover:text-yellow-300 text-3xl"
               onClick={closeModal}
             >
               &times;
@@ -43,29 +43,29 @@ export default function ProjectDetailRana() {
         </div>
       )}
 
-      <div className="max-w-4xl mx-auto bg-gray-800 p-8 rounded-2xl shadow-lg space-y-8">
+      <div className="max-w-4xl mx-auto bg-gray-800/50 p-8 rounded-2xl shadow-lg space-y-8">
         {/* Header */}
         <header className="space-y-4">
           <h1 className="text-4xl font-bold text-yellow-300">Tote Bags Personalizadas</h1>
-          <p className="text-gray-300 text-lg">
+          <p className="text-white-300 text-xl">
             Ejercicio educativo que evolucionó de un simple consumo de API a una aplicación React completa,
             marcando mi transición de estudiante a desarrollador profesional.
           </p>
         </header>
 
-        {/* Sección: Contexto */}
+        {/* section: Context */}
         <section className="space-y-4">
-          <h2 className="text-2xl font-semibold text-yellow-200">Contexto del Proyecto</h2>
-          <p className="text-gray-300">
+          <h2 className="text-2xl font-semibold text-yellow-300">Contexto del Proyecto</h2>
+          <p className="text-white-300 text-xl">
             Este proyecto comenzó como un ejercicio en Platzi para aprender sobre el consumo de APIs usando RapidAPI.
             Decidí basarme en un emprendimiento familiar de tote bags personalizadas, creando una página simple que
             mostraba las imágenes publicadas en Instagram del negocio.
           </p>
         </section>
 
-        {/* Sección: Versión Inicial */}
+        {/* section: initial  Version  */}
         <section className="space-y-4">
-          <h2 className="text-2xl font-semibold text-yellow-200">Versión Inicial (Platzi)</h2>
+          <h2 className="text-2xl font-semibold text-yellow-300">Versión Inicial (Platzi)</h2>
           <div className="grid md:grid-cols-2 gap-4">
             <div 
               className="bg-gray-700 rounded-xl p-2 cursor-pointer"
@@ -89,20 +89,20 @@ export default function ProjectDetailRana() {
             </div>
           </div>
           <div className="space-y-2">
-            <p className="text-gray-300">
+            <p className="text-white-300 text-xl">
               <span className="font-semibold text-yellow-200">Desafíos iniciales:</span> El código combinaba HTML y CSS en un solo archivo, 
               lo que dificultaba su lectura y mantenimiento.
             </p>
-            <p className="text-gray-300">
+            <p className="text-white-300 text-xl">
               <span className="font-semibold text-yellow-200">Aprendizaje clave:</span> Cómo consumir la API de Instagram de manera eficiente 
               y crear una interfaz funcional.
             </p>
           </div>
         </section>
 
-        {/* Sección: Refactorización */}
+        {/* section: Refactoring */}
         <section className="space-y-4">
-          <h2 className="text-2xl font-semibold text-yellow-200">Refactorización con React</h2>
+          <h2 className="text-2xl font-semibold text-yellow-300">Refactorización con React</h2>
           <div className="grid md:grid-cols-2 gap-4">
             <div 
               className="bg-gray-700 rounded-xl p-2 cursor-pointer"
@@ -126,10 +126,10 @@ export default function ProjectDetailRana() {
             </div>
           </div>
           <div className="space-y-2">
-            <p className="text-gray-300">
-              <span className="font-semibold text-yellow-200">Mejoras implementadas:</span>
+            <p className="text-white-300 text-xl">
+              <span className="font-semibold text-yellow-300">Mejoras implementadas:</span>
             </p>
-            <ul className="text-gray-300 list-disc pl-5 space-y-1">
+            <ul className="text-white-300 text-xl list-disc pl-5 space-y-1">
               <li>Migración a React con componentes reutilizables</li>
               <li>Uso de TailwindCSS para estilizado consistente</li>
               <li>Implementación de un botón de contacto funcional</li>
@@ -139,19 +139,19 @@ export default function ProjectDetailRana() {
           </div>
         </section>
 
-        {/* Sección: Impacto */}
+        {/* section: Impact */}
         <section className="space-y-4">
-          <h2 className="text-2xl font-semibold text-yellow-200">Impacto Profesional</h2>
-          <p className="text-gray-300">
+          <h2 className="text-2xl font-semibold text-yellow-300">Impacto Profesional</h2>
+          <p className="text-white-300 text-xl">
             Este proyecto, aunque aparentemente simple, representó un punto de inflexión en mi carrera:
           </p>
-          <ul className="text-gray-300 list-disc pl-5 space-y-1">
+          <ul className="text-white-300 text-xl list-disc pl-5 space-y-1">
             <li>Último proyecto como estudiante y primero como desarrollador profesional</li>
             <li>Validación de conceptos aprendidos en cursos</li>
             <li>Primera experiencia real con React y TailwindCSS</li>
             <li>Demostración de capacidad para refactorizar y mejorar código existente</li>
           </ul>
-          <p className="text-gray-300 italic">
+          <p className="text-white-300 text-xl italic">
             "Fue fundamental para ganar confianza en mis habilidades y comenzar a crear proyectos más complejos."
           </p>
         </section>
