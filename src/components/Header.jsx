@@ -85,7 +85,6 @@ export default function Header() {
         </div>
       </header>
 
-      {/* Menú móvil que desplaza el contenido */}
       {isMenuOpen && (
         <div className="md:hidden bg-gray-900/95 backdrop-blur-sm z-40 border-b border-gray-800 text-white">
           <ul className="flex flex-col space-y-4 p-4 font-sans">

@@ -35,6 +35,9 @@ export default function AnimatedBackground() {
         };
     }, []);
 
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    const blobCount = isMobile ? 2 : 4; 
+
     return (
         <div className="Figures" style={{
             position: "fixed",
@@ -46,7 +49,7 @@ export default function AnimatedBackground() {
             overflow: "hidden",
             pointerEvents: "none"
         }}>
-            {[0, 1, 2, 3].map((i) => (
+            {Array.from({ length: blobCount }).map((_, i) => (
                 <BlobFigure key={i} index={i} />
             ))}
         </div>
@@ -70,12 +73,16 @@ function BlobFigure({ index }) {
         'M43.1,-41.3C57.8,-28.7,72.6,-14.3,73.5,0.8C74.4,15.9,61.4,31.9,46.7,45.1C32,58.4,15.5,68.9,-1.5,70.4C-18.5,71.9,-37,64.4,-50.1,51.1C-63.2,37.8,-70.9,18.9,-70.2,0.5C-69.5,-17.9,-60.5,-35.8,-47.4,-48.4C-34.3,-61,-17.2,-68.3,-0.7,-67.6C15.8,-66.9,31.6,-58.2,43.1,-41.3Z'
     ];
 
-    const positions = [
+    const allPositions = [
         { top: "10%", left: "5%", width: isMobile ? "80%" : "60%", animation: `slowRotate ${isMobile ? '10s' : '5s'} ease-in-out infinite, pulse ${isMobile ? '12s' : '8s'} ease-in-out infinite` },
         { top: "5%", right: "10%", width: isMobile ? "70%" : "55%", animation: `slowRotate ${isMobile ? '15s' : '9s'} ease-in-out infinite reverse, pulse ${isMobile ? '15s' : '10s'} ease-in-out infinite` },
         { bottom: "5%", left: "10%", width: isMobile ? "65%" : "50%", animation: `slowRotate ${isMobile ? '18s' : '12s'} ease-in-out infinite alternate` },
         { bottom: "10%", right: "5%", width: isMobile ? "80%" : "60%", animation: `slowRotate ${isMobile ? '20s' : '15s'} ease-in-out infinite alternate-reverse, pulse ${isMobile ? '15s' : '12s'} ease-in-out infinite` }
     ];
+
+    const positions = isMobile ? allPositions.slice(0, 2) : allPositions;
+    const color = colors[index];
+    const position = positions[index];
 
     return (
         <svg
@@ -83,19 +90,19 @@ function BlobFigure({ index }) {
             xmlns="http://www.w3.org/2000/svg"
             style={{
                 position: "absolute",
-                width: positions[index].width,
-                top: positions[index].top,
-                left: positions[index].left,
-                right: positions[index].right,
-                bottom: positions[index].bottom,
+                width: position.width,
+                top: position.top,
+                left: position.left,
+                right: position.right,
+                bottom: position.bottom,
                 opacity: 0.8,
                 filter: `blur(${isMobile ? 15 + index * 3 : 30 + index * 5}px)`,
-                animation: positions[index].animation,
+                animation: position.animation,
                 willChange: "transform, opacity, filter",
                 mixBlendMode: "screen"
             }}
         >
-            <path fill={colors[index]} d={paths[index]} transform="translate(100 100)" />
+            <path fill={color} d={paths[index]} transform="translate(100 100)" />
         </svg>
     );
 }
