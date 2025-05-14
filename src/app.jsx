@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import ProjectDetailAI from './pages/ProjectDetailAI';
 import ProjectDetailRana from './pages/ProjectDetailRana';
 import AnimatedBackground from './components/BackgroundEffect';
+import ProjectDetailReact from './pages/ProjectDetailReact';
 
 export function App() {
   return (
@@ -17,6 +18,7 @@ export function App() {
             <Home path="/" />
             <ProjectDetailAI path="/proyecto/ai-devguide" />
             <ProjectDetailRana path="/proyecto/la-rana-pintada" />
+            <ProjectDetailReact path="/proyecto/react-course" />
           </Router>
         </main>
         <Footer />

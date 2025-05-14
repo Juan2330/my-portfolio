@@ -1,20 +1,14 @@
-import { useEffect } from 'preact/hooks';
+import { useState, useEffect } from 'preact/hooks';
 import ProjectCard from '../components/ProjectCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faWhatsapp, faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons';
+import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { faGithub, faLinkedin, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 
-export default function Home() {
-    useEffect(() => {
-        const hash = window.location.hash;
-        if (hash) {
-            const id = hash.replace('#', '');
-            setTimeout(() => {
-                document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-            }, 100);
-        }
-    }, []);
-
+export default function ProjectsSection() {
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [isAnimating, setIsAnimating] = useState(false);
+    
     const projects = [
         {
             title: "AI DevGuide",
@@ -25,14 +19,43 @@ export default function Home() {
             tags: ['Python', 'Flask', 'Hugging Face', 'Preact', 'TailwindCSS']
         },
         {
+            title: "React Course Project",
+            description: "Proyecto educativo de un curso de React que implementa un carrito de compras con funcionalidades avanzadas.",
+            imageUrl: "/React-Course-Final.gif",
+            projectUrl: "https://react-course-frontend-production.up.railway.app/",
+            detailsUrl: "/proyecto/react-course",
+            tags: ["React", "TailwindCSS", "Vite", "Context API", "GitHub Aouth"]
+        },
+        {
             title: "La Rana Pintada",
             description: "Sitio web para una tienda de tote bags personalizadas para visualizar las publicaciones hechas en Instagram.",
             imageUrl: "https://res.cloudinary.com/dy1t4y5wc/image/upload/v1744330626/La_Rana_Pintada_sy5oah.gif",
             projectUrl: "https://la-rana-pintada.vercel.app/",
             detailsUrl: "/proyecto/la-rana-pintada",
-            tags: ["React", "TailwindCSS"]
+            tags: ["React", "TailwindCSS", "Vite"]
         },
     ];
+
+    const nextProject = () => {
+        if (isAnimating) return;
+        setIsAnimating(true);
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % projects.length);
+        setTimeout(() => setIsAnimating(false), 500);
+    };
+
+    const prevProject = () => {
+        if (isAnimating) return;
+        setIsAnimating(true);
+        setCurrentIndex((prevIndex) => (prevIndex - 1 + projects.length) % projects.length);
+        setTimeout(() => setIsAnimating(false), 500);
+    };
+
+    const getVisibleProjects = () => {
+        return [
+            projects[currentIndex],
+            projects[(currentIndex + 1) % projects.length]
+        ];
+    };
 
     return (
         <main className="min-h-screen bg-translucent backdrop-blur-sm text-white relative overflow-hidden font-sans">
@@ -74,7 +97,7 @@ export default function Home() {
             </section>
 
             {/* Projects Section */}
-            <section id="projects" className="relative py-16 px-4 sm:px-6  bg-gray-800/50 backdrop-blur-sm">
+            <section id="projects" className="relative py-16 px-4 sm:px-6 bg-gray-800/50 backdrop-blur-sm">
                 <div className="absolute inset-0 bg-grid-small-gray-700/20"></div>
                 <div className="max-w-6xl mx-auto relative z-10">
                     <h2 className="text-2xl sm:text-3xl font-bold mb-12 text-center font-heading">
@@ -84,10 +107,34 @@ export default function Home() {
                         </span>
                     </h2>
                     
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                        {projects.map((project, index) => (
-                            <ProjectCard key={index} {...project} />
-                        ))}
+                    <div className="relative">
+                        <div className="flex justify-center">
+                            <div className="w-full max-w-5xl">
+                                <div className={`grid grid-cols-2 gap-8 transition-opacity duration-500 ${isAnimating ? 'opacity-70' : 'opacity-100'}`}>
+                                    {getVisibleProjects().map((project, index) => (
+                                        <div key={`${currentIndex}-${index}`} className="w-full">
+                                            <ProjectCard {...project} />
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+
+                        <button 
+                            onClick={prevProject}
+                            className="absolute left-0 top-1/2 -translate-y-1/2 bg-gray-700/80 hover:bg-gray-600/90 rounded-full w-12 h-12 flex items-center justify-center z-20 transition-all hover:scale-110 shadow-lg"
+                            aria-label="Proyecto anterior"
+                        >
+                            <FontAwesomeIcon icon={faArrowLeft} className="text-white text-xl" />
+                        </button>
+                        
+                        <button 
+                            onClick={nextProject}
+                            className="absolute right-0 top-1/2 -translate-y-1/2 bg-gray-700/80 hover:bg-gray-600/90 rounded-full w-12 h-12 flex items-center justify-center z-20 transition-all hover:scale-110 shadow-lg"
+                            aria-label="Siguiente proyecto"
+                        >
+                            <FontAwesomeIcon icon={faArrowRight} className="text-white text-xl" />
+                        </button>
                     </div>
                 </div>
             </section>
