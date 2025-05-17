@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { Link } from "preact-router";
 
-export default function ProjectDetailReact() {
+export default function ProjectDetailAI() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -49,10 +49,14 @@ export default function ProjectDetailReact() {
         <div className="bg-gray-800/50 p-6 md:p-8 rounded-2xl shadow-lg space-y-8">
           {/* Header */}
           <header className="space-y-4">
-            <h1 className="text-3xl md:text-4xl font-bold text-yellow-300 font-heading">React-Course Project</h1>
+            <Link href="/" className="flex items-center text-blue-400 hover:text-blue-300 transition-colors">
+              <FontAwesomeIcon icon={faArrowLeft} className="mr-2" />
+              Volver al portafolio
+            </Link>
+            <h1 className="text-3xl md:text-4xl font-bold text-yellow-300 font-heading">AI DevGuide</h1>
             <p className="text-white-300 text-xl">
-              Proyecto educativo de un curso de React que evolucionó a una aplicación completa con autenticación,
-              carrito de compras y backend personalizado, demostrando mi capacidad para mejorar y extender proyectos existentes.
+              Mi primer proyecto full-stack con IA, evolucionando de una idea ambiciosa a una solución práctica
+              que combina Python, Flask y Preact para recomendar tecnologías de desarrollo.
             </p>
           </header>
 
@@ -60,17 +64,17 @@ export default function ProjectDetailReact() {
           <section className="space-y-4">
             <h2 className="text-2xl font-semibold text-yellow-300 font-heading">Origen y Evolución</h2>
             <p className="text-white-300 text-xl">
-              Este proyecto comenzó como parte del curso de React en Platzi, donde aprendí los fundamentos de React
-              mientras desarrollaba una tienda virtual básica. La versión inicial usaba la API de Platzi que presentaba
-              múltiples problemas técnicos.
+              Inicialmente planeé crear un recomendador de películas y series con IA, pero al enfrentar dificultades
+              técnicas para implementar el sistema de recomendaciones, cambié mi idea hacia un recomendador de tecnologías
+              de desarrollo.
             </p>
             <div className="bg-gray-900 rounded-xl p-4">
               <div 
                 className="bg-gray-800 rounded-lg overflow-hidden cursor-pointer"
-                onClick={() => openModal("/React-Course-Platzi.gif")}
+                onClick={() => openModal("/AI_DevGuide_Beta.gif")}
               >
                 <img
-                  src="/React-Course-Platzi.gif"
+                  src="/AI_DevGuide_Beta.gif"
                   alt="Versión inicial del proyecto"
                   className="w-full max-h-[28rem] object-contain bg-gray-900 p-2 mx-auto"
                 />
@@ -84,10 +88,10 @@ export default function ProjectDetailReact() {
             <div className="bg-gray-900 rounded-xl p-4">
               <div 
                 className="bg-gray-800 rounded-lg overflow-hidden cursor-pointer"
-                onClick={() => openModal("/React-Course-Platzi-Codigo.gif")}
+                onClick={() => openModal("/AI_DevGuide_Codigo_Ollama.gif")}
               >
                 <img
-                  src="/React-Course-Platzi-Codigo.gif"
+                  src="/AI_DevGuide_Codigo_Ollama.gif"
                   alt="Código inicial del proyecto"
                   className="w-full max-h-[28rem] object-contain bg-gray-900 p-2 mx-auto"
                 />
@@ -95,15 +99,13 @@ export default function ProjectDetailReact() {
             </div>
             <div className="space-y-2">
               <p className="text-white-300 text-xl">
-                <span className="font-semibold text-yellow-200">Problemas iniciales:</span> La API de Platzi (api.escuelajs.co) presentaba múltiples fallos:
+                <span className="font-semibold text-yellow-200">Problemas iniciales:</span> Implementación inicial con Node.js y React,
+                pero la IA devolvía respuestas incoherentes.
               </p>
-              <ul className="text-white-300 text-xl list-disc pl-5 space-y-1">
-                <li>Frecuentes caídas del servicio</li>
-                <li>Imágenes de productos que no cargaban</li>
-                <li>Categorías de productos mal organizadas</li>
-              </ul>
               <p className="text-white-300 text-xl">
-                <span className="font-semibold text-yellow-200">Solución implementada:</span> Migración a Fake Store API (fakestoreapi.com), más estable pero con menos productos.
+                <span className="font-semibold text-yellow-200">Solución clave:</span> Migré el backend a Python
+                basándome en <a href="https://www.youtube.com/watch?v=a4N56VfW6hA" className="text-yellow-200 hover:underline" target="_blank">este tutorial</a>,
+                lo que permitió una mejor comunicación con la IA.
               </p>
             </div>
           </section>
@@ -114,31 +116,31 @@ export default function ProjectDetailReact() {
             <div className="grid md:grid-cols-2 gap-4">
               <div 
                 className="bg-gray-700 rounded-xl p-2 cursor-pointer"
-                onClick={() => openModal("/React-Course-Final.gif")}
+                onClick={() => openModal("/AI_DevGuide.gif")}
               >
                 <img
-                  src="/React-Course-Final.gif"
+                  src="/AI_DevGuide.gif"
                   alt="Interfaz final"
                   className="rounded-lg shadow-md w-full h-64 object-contain bg-gray-900"
                 />
               </div>
               <div 
                 className="bg-gray-700 rounded-xl p-2 cursor-pointer"
-                onClick={() => openModal("/React-Course-Final-Codigo.gif")}
+                onClick={() => openModal("/AI_DevGuide_Codigo_HF.gif")}
               >
                 <img
-                  src="/React-Course-Final-Codigo.gif"
+                  src="/AI_DevGuide_Codigo_HF.gif"
                   alt="Código final"
                   className="rounded-lg shadow-md w-full h-64 object-contain bg-gray-900"
                 />
               </div>
             </div>
             <ul className="text-white-300 text-xl list-disc pl-5 space-y-2 mt-4">
-              <li>Autenticación con GitHub OAuth</li>
-              <li>Sistema de persistencia de compras</li>
-              <li>Perfil de usuario con historial de pedidos</li>
-              <li>Uso de cookies para mantener la sesión</li>
-              <li>Backend con Node.js y Express</li>
+              <li>Backend en Flask para manejar la lógica de la IA</li>
+              <li>Frontend en Preact para una interfaz ligera</li>
+              <li>Migración final de Ollama a Hugging Face</li>
+              <li>Sistema de recomendaciones basado en descripciones</li>
+              <li>Interfaz intuitiva para desarrolladores</li>
             </ul>
           </section>
 
@@ -149,19 +151,19 @@ export default function ProjectDetailReact() {
               <div className="bg-gray-700/50 p-4 rounded-lg">
                 <h3 className="font-semibold text-yellow-300 mb-2">Frontend</h3>
                 <ul className="space-y-1">
-                  <li>React</li>
+                  <li>Preact</li>
                   <li>Vite</li>
                   <li>TailwindCSS</li>
-                  <li>Context API</li>
+                  <li>Fetch API</li>
                 </ul>
               </div>
               <div className="bg-gray-700/50 p-4 rounded-lg">
                 <h3 className="font-semibold text-yellow-300 mb-2">Backend</h3>
                 <ul className="space-y-1">
-                  <li>Node.js</li>
-                  <li>Express</li>
-                  <li>MongoDB</li>
-                  <li>GitHub OAuth</li>
+                  <li>Python</li>
+                  <li>Flask</li>
+                  <li>Hugging Face</li>
+                  <li>Ollama (inicialmente)</li>
                 </ul>
               </div>
             </div>
@@ -170,15 +172,15 @@ export default function ProjectDetailReact() {
           {/* Section: Links */}
           <section className="pt-4 flex flex-col sm:flex-row gap-4">
             <a 
-              href="https://react-course-frontend-production.up.railway.app/" 
+              href="https://ai-devguide-huggin-1.onrender.com/" 
               target="_blank"
               rel="noopener noreferrer"
               className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition-all hover:shadow-lg hover:-translate-y-0.5 text-center"
             >
-              Ver Proyecto
+              Ver Proyecto en Vivo
             </a>
             <a 
-              href="https://github.com/Juan2330/react-course" 
+              href="https://github.com/Juan2330/AI-DevGuide" 
               target="_blank"
               rel="noopener noreferrer"
               className="flex-1 bg-gray-700 hover:bg-gray-600 text-white font-medium py-3 px-6 rounded-lg transition-all hover:shadow-lg hover:-translate-y-0.5 text-center"
