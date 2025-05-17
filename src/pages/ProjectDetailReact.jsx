@@ -160,7 +160,6 @@ export default function ProjectDetailReact() {
                 <ul className="space-y-1">
                   <li>Node.js</li>
                   <li>Express</li>
-                  <li>MongoDB</li>
                   <li>GitHub OAuth</li>
                 </ul>
               </div>
