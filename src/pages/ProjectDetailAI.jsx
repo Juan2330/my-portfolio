@@ -176,7 +176,7 @@ export default function ProjectDetailAI() {
               Ver Proyecto en Vivo
             </a>
             <a 
-              href="https://github.com/Juan2330/AI-DevGuide" 
+              href="https://github.com/Juan2330/AI_DevGuide_Huggin" 
               target="_blank"
               rel="noopener noreferrer"
               className="flex-1 bg-gray-700 hover:bg-gray-600 text-white font-medium py-3 px-6 rounded-lg transition-all hover:shadow-lg hover:-translate-y-0.5 text-center"
