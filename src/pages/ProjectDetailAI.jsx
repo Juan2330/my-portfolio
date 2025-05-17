@@ -49,10 +49,6 @@ export default function ProjectDetailAI() {
         <div className="bg-gray-800/50 p-6 md:p-8 rounded-2xl shadow-lg space-y-8">
           {/* Header */}
           <header className="space-y-4">
-            <Link href="/" className="flex items-center text-blue-400 hover:text-blue-300 transition-colors">
-              <FontAwesomeIcon icon={faArrowLeft} className="mr-2" />
-              Volver al portafolio
-            </Link>
             <h1 className="text-3xl md:text-4xl font-bold text-yellow-300 font-heading">AI DevGuide</h1>
             <p className="text-white-300 text-xl">
               Mi primer proyecto full-stack con IA, evolucionando de una idea ambiciosa a una solución práctica
