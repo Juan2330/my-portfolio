@@ -16,7 +16,6 @@
 
 📧 [jacoboramirezcontacto@gmail.com](mailto:jacoboramirezcontacto@gmail.com)  
 💼 [LinkedIn](https://www.linkedin.com/in/jacobo-ramírez-a9028935b)  
-🌐 [Portafolio](https://my-portfolio-git-main-juan-ramirezs-projects-4dd7f1e5.vercel.app)
 
 ## 📄 Licencia
 
