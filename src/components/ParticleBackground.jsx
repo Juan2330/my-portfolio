@@ -3,7 +3,7 @@ import { useEffect } from 'preact/hooks';
 export default function ParticleBackground() {
     useEffect(() => {
         const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        
+
         const canvas = document.createElement('canvas');
         canvas.style.position = 'fixed';
         canvas.style.top = '0';
@@ -35,7 +35,7 @@ export default function ParticleBackground() {
         let animationId;
         const animate = () => {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
+
             particles.forEach(particle => {
                 ctx.fillStyle = particle.color;
                 ctx.beginPath();
@@ -57,7 +57,7 @@ export default function ParticleBackground() {
                 animate();
                 setTimeout(() => {
                     animationId = requestAnimationFrame(reducedAnimate);
-                }, 1000 / 30); 
+                }, 1000 / 30);
             };
             reducedAnimate();
         } else {

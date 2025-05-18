@@ -11,7 +11,7 @@ export function App() {
   return (
     <div className="min-h-screen relative">
       <AnimatedBackground />
-      <div className="relative z-10 flex flex-col min-h-screen"> 
+      <div className="relative z-10 flex flex-col min-h-screen">
         <Header />
         <main className="flex-grow">
           <Router>

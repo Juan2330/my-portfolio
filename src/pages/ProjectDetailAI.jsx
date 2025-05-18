@@ -25,12 +25,12 @@ export default function ProjectDetailAI() {
   return (
     <div className="min-h-screen bg-gradient-to-br bg-gray-900/20 text-white font-sans">
       {isModalOpen && (
-        <div 
+        <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90 p-4"
           onClick={closeModal}
         >
           <div className="relative max-w-4xl w-full max-h-[90vh]">
-            <button 
+            <button
               className="absolute -top-10 right-0 text-white hover:text-yellow-300 text-3xl"
               onClick={closeModal}
             >
@@ -65,7 +65,7 @@ export default function ProjectDetailAI() {
               de desarrollo.
             </p>
             <div className="bg-gray-900 rounded-xl p-4">
-              <div 
+              <div
                 className="bg-gray-800 rounded-lg overflow-hidden cursor-pointer"
                 onClick={() => openModal("/AI_DevGuide_Beta.gif")}
               >
@@ -82,7 +82,7 @@ export default function ProjectDetailAI() {
           <section className="space-y-4">
             <h2 className="text-2xl font-semibold text-yellow-300 font-heading">Desarrollo Técnico</h2>
             <div className="bg-gray-900 rounded-xl p-4">
-              <div 
+              <div
                 className="bg-gray-800 rounded-lg overflow-hidden cursor-pointer"
                 onClick={() => openModal("/AI_DevGuide_Codigo_Ollama.gif")}
               >
@@ -110,7 +110,7 @@ export default function ProjectDetailAI() {
           <section className="space-y-4">
             <h2 className="text-2xl font-semibold text-yellow-300 font-heading">Implementación Final</h2>
             <div className="grid md:grid-cols-2 gap-4">
-              <div 
+              <div
                 className="bg-gray-700 rounded-xl p-2 cursor-pointer"
                 onClick={() => openModal("/AI_DevGuide.gif")}
               >
@@ -120,7 +120,7 @@ export default function ProjectDetailAI() {
                   className="rounded-lg shadow-md w-full h-64 object-contain bg-gray-900"
                 />
               </div>
-              <div 
+              <div
                 className="bg-gray-700 rounded-xl p-2 cursor-pointer"
                 onClick={() => openModal("/AI_DevGuide_Codigo_HF.gif")}
               >
@@ -167,16 +167,16 @@ export default function ProjectDetailAI() {
 
           {/* Section: Links */}
           <section className="pt-4 flex flex-col sm:flex-row gap-4">
-            <a 
-              href="https://ai-devguide-huggin-1.onrender.com/" 
+            <a
+              href="https://ai-devguide-huggin-1.onrender.com/"
               target="_blank"
               rel="noopener noreferrer"
               className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition-all hover:shadow-lg hover:-translate-y-0.5 text-center"
             >
               Ver Proyecto en Vivo
             </a>
-            <a 
-              href="https://github.com/Juan2330/AI_DevGuide_Huggin" 
+            <a
+              href="https://github.com/Juan2330/AI_DevGuide_Huggin"
               target="_blank"
               rel="noopener noreferrer"
               className="flex-1 bg-gray-700 hover:bg-gray-600 text-white font-medium py-3 px-6 rounded-lg transition-all hover:shadow-lg hover:-translate-y-0.5 text-center"

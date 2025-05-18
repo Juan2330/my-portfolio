@@ -15,3 +15,47 @@
     @apply lg:min-w-[32rem] lg:max-w-[36rem];
     @apply xl:min-w-[36rem] xl:max-w-[40rem];
 }
+
+.slide-enter {
+    transform: translateX(100%);
+    opacity: 0;
+}
+
+.slide-enter-active {
+    transform: translateX(0);
+    opacity: 1;
+    transition: all 0.3s ease-out;
+}
+
+.slide-exit {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.slide-exit-active {
+    transform: translateX(-100%);
+    opacity: 0;
+    transition: all 0.3s ease-out;
+}
+
+.touch-slide {
+    transition: transform 0.1s linear;
+}
+
+.project-card-image-container {
+    aspect-ratio: 16/9;
+    overflow: hidden;
+}
+
+.projects-container {
+    position: relative;
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .project-card-desktop {
+        min-width: 28rem;
+        max-width: 32rem;
+    }
+}
+

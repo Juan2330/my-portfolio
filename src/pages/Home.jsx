@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'preact/hooks';
+import { useState, useEffect, useRef } from 'preact/hooks';
 import ProjectCard from '../components/ProjectCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
@@ -11,12 +11,15 @@ export default function ProjectsSection() {
     const [isMobile, setIsMobile] = useState(false);
     const [touchStart, setTouchStart] = useState(null);
     const [touchEnd, setTouchEnd] = useState(null);
-    
+    const [translateX, setTranslateX] = useState(0);
+    const projectsContainerRef = useRef(null);
+    const animationRef = useRef(null);
+
     const projects = [
         {
             title: "AI DevGuide",
             description: "Sistema de recomendación tecnológica con IA generativa para ayudar a los desarrolladores a elegir la mejor tecnología para sus proyectos.",
-            imageUrl: "https://res.cloudinary.com/dy1t4y5wc/image/upload/v1744329393/AI_DevGuide_lrzoyd.gif", 
+            imageUrl: "https://res.cloudinary.com/dy1t4y5wc/image/upload/v1744329393/AI_DevGuide_lrzoyd.gif",
             projectUrl: "https://ai-devguide-huggin-1.onrender.com/",
             detailsUrl: "/proyecto/ai-devguide",
             tags: ['Python', 'Flask', 'Hugging Face', 'Preact', 'TailwindCSS']
@@ -45,43 +48,87 @@ export default function ProjectsSection() {
         };
         checkIfMobile();
         window.addEventListener('resize', checkIfMobile);
-        return () => window.removeEventListener('resize', checkIfMobile);
+        return () => {
+            window.removeEventListener('resize', checkIfMobile);
+            cancelAnimationFrame(animationRef.current);
+        };
     }, []);
+
+    const animateSlide = (direction, velocity = 0.5) => {
+        if (isAnimating) return;
+
+        setIsAnimating(true);
+        const container = projectsContainerRef.current;
+        const containerWidth = container.offsetWidth;
+        const distance = direction === 'left' ? containerWidth : -containerWidth;
+
+        let startTime = null;
+        const duration = isMobile ? Math.min(500, Math.abs(distance) / velocity) : 300;
+
+        const animation = (timestamp) => {
+            if (!startTime) startTime = timestamp;
+            const elapsed = timestamp - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const easeProgress = 0.5 - Math.cos(progress * Math.PI) / 2;
+
+            setTranslateX(distance * easeProgress);
+
+            if (progress < 1) {
+                animationRef.current = requestAnimationFrame(animation);
+            } else {
+                setCurrentIndex(prev =>
+                    direction === 'left'
+                        ? (prev + 1) % projects.length
+                        : (prev - 1 + projects.length) % projects.length
+                );
+                setTranslateX(0);
+                setIsAnimating(false);
+                animationRef.current = null;
+            }
+        };
+
+        animationRef.current = requestAnimationFrame(animation);
+    };
 
     const handleTouchStart = (e) => {
         setTouchStart(e.targetTouches[0].clientX);
+        setTouchEnd(e.targetTouches[0].clientX);
     };
 
     const handleTouchMove = (e) => {
-        setTouchEnd(e.targetTouches[0].clientX);
+        if (!touchStart) return;
+        const currentTouch = e.targetTouches[0].clientX;
+        setTouchEnd(currentTouch);
+        setTranslateX(currentTouch - touchStart);
     };
 
     const handleTouchEnd = () => {
         if (!touchStart || !touchEnd) return;
-        
-        const distance = touchStart - touchEnd;
-        const isLeftSwipe = distance > 50;
-        const isRightSwipe = distance < -50;
 
-        if (isLeftSwipe) nextProject();
-        if (isRightSwipe) prevProject();
-        
+        const distance = touchEnd - touchStart;
+        const absDistance = Math.abs(distance);
+        const velocity = absDistance / (performance.now() - touchStart.timeStamp);
+
+        if (absDistance > 50) {
+            if (distance > 0) {
+                animateSlide('right', velocity);
+            } else {
+                animateSlide('left', velocity);
+            }
+        } else {
+            setTranslateX(0);
+        }
+
         setTouchStart(null);
         setTouchEnd(null);
     };
 
     const nextProject = () => {
-        if (isAnimating) return;
-        setIsAnimating(true);
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % projects.length);
-        setTimeout(() => setIsAnimating(false), 500);
+        animateSlide('left');
     };
 
     const prevProject = () => {
-        if (isAnimating) return;
-        setIsAnimating(true);
-        setCurrentIndex((prevIndex) => (prevIndex - 1 + projects.length) % projects.length);
-        setTimeout(() => setIsAnimating(false), 500);
+        animateSlide('right');
     };
 
     const getVisibleProjects = () => {
@@ -96,7 +143,7 @@ export default function ProjectsSection() {
             {/* Hero Section */}
             <section id="hero" className="relative py-20 px-4 sm:px-6 overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-900/5 via-transparent to-purple-900/5 opacity-20"></div>
-                    <div className="container-responsive relative z-10">
+                <div className="container-responsive relative z-10">
                     <div className="text-center">
                         <h1 className="text-3xl sm:text-5xl font-bold mb-10 font-heading">
                             Hola, soy <span className="text-black/80">Jacobo Ramírez</span>
@@ -104,11 +151,11 @@ export default function ProjectsSection() {
                         <p className="text-lg sm:text-2xl text-gray-950 max-w-3xl mx-auto leading-relaxed mb-8">
                             Desarrollador Full Stack especializado en crear soluciones web modernas y eficientes.
                         </p>
-                        
+
                         {/* Social Networks  */}
                         <div className="flex justify-center space-x-6 mb-10">
-                            <a 
-                                href="https://github.com/Juan2330" 
+                            <a
+                                href="https://github.com/Juan2330"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-gray hover:text-black transition-colors"
@@ -116,8 +163,8 @@ export default function ProjectsSection() {
                             >
                                 <FontAwesomeIcon icon={faGithub} className="w-12 h-12" />
                             </a>
-                            <a 
-                                href="https://linkedin.com/in/jacobo-ramírez-a9028935b" 
+                            <a
+                                href="https://linkedin.com/in/jacobo-ramírez-a9028935b"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-gray hover:text-blue-600 transition-colors"
@@ -132,64 +179,73 @@ export default function ProjectsSection() {
 
             {/* Projects Section */}
             <section id="projects" className="relative py-16 px-4 sm:px-6 bg-gray-800/50 backdrop-blur-sm">
-            <div className="container-responsive relative z-10">
-                <h2 className="text-2xl sm:text-3xl font-bold mb-12 text-center font-heading">
-                    <span className="relative inline-block">
-                        <span className="absolute -bottom-1 left-0 w-full h-1 bg-black/60 rounded-full"></span>
-                        <span className="relative">Mis Proyectos</span>
-                    </span>
-                </h2>
-                
-                <div 
-                    className="relative"
-                    onTouchStart={handleTouchStart}
-                    onTouchMove={handleTouchMove}
-                    onTouchEnd={handleTouchEnd}
-                >
-                    <div className={`flex ${isMobile ? 'justify-center' : 'justify-between'} gap-8 transition-opacity duration-500 ${isAnimating ? 'opacity-70' : 'opacity-100'}`}>
-                        {getVisibleProjects().map((project, index) => (
-                            <div 
-                                key={`${currentIndex}-${index}`} 
-                                className={`${isMobile ? 'w-full max-w-md' : 'w-full max-w-2xl'}`}
+                <div className="container-responsive relative z-10">
+                    <h2 className="text-2xl sm:text-3xl font-bold mb-12 text-center font-heading">
+                        <span className="relative inline-block">
+                            <span className="absolute -bottom-1 left-0 w-full h-1 bg-black/60 rounded-full"></span>
+                            <span className="relative">Mis Proyectos</span>
+                        </span>
+                    </h2>
+
+                    <div className="relative mx-auto max-w-6xl">
+                        <div
+                            className="relative"
+                            onTouchStart={handleTouchStart}
+                            onTouchMove={handleTouchMove}
+                            onTouchEnd={handleTouchEnd}
+                        >
+                            <div
+                                ref={projectsContainerRef}
+                                className={`flex ${isMobile ? 'justify-center' : 'justify-center'} gap-8`}
+                                style={{
+                                    transform: `translateX(${translateX}px)`,
+                                    transition: isMobile && touchStart ? 'none' : 'transform 0.3s ease-out'
+                                }}
                             >
-                                <ProjectCard {...project} />
+                                {getVisibleProjects().map((project, index) => (
+                                    <div
+                                        key={`${currentIndex}-${index}`}
+                                        className={`${isMobile ? 'w-full' : 'w-full max-w-xl'} flex-shrink-0`}
+                                    >
+                                        <ProjectCard {...project} />
+                                    </div>
+                                ))}
                             </div>
-                        ))}
+                        </div>
                     </div>
 
                     {!isMobile && (
-                        <>
-                            <button 
+                        <div className="flex justify-between w-full absolute left-0 right-0 top-1/2 bottom-1/2 -translate-y-1/2 px-8 pointer-events-none">
+                            <button
                                 onClick={prevProject}
-                                className="absolute -left-16 top-1/2 -translate-y-1/2 bg-gray-700/80 hover:bg-gray-600/90 rounded-full w-12 h-12 flex items-center justify-center z-20 transition-all hover:scale-110 shadow-lg"
+                                className="bg-gray-700/80 hover:bg-gray-600/90 rounded-full w-16 h-16 flex items-center justify-center z-20 transition-all hover:scale-110 shadow-lg pointer-events-auto transform -translate-x-16"
                                 aria-label="Proyecto anterior"
                             >
                                 <FontAwesomeIcon icon={faArrowLeft} className="text-white text-xl" />
                             </button>
-                            
-                            <button 
+
+                            <button
                                 onClick={nextProject}
-                                className="absolute -right-16 top-1/2 -translate-y-1/2 bg-gray-700/80 hover:bg-gray-600/90 rounded-full w-12 h-12 flex items-center justify-center z-20 transition-all hover:scale-110 shadow-lg"
+                                className="bg-gray-700/80 hover:bg-gray-600/90 rounded-full w-16 h-16 flex items-center justify-center z-20 transition-all hover:scale-110 shadow-lg pointer-events-auto transform translate-x-16"
                                 aria-label="Siguiente proyecto"
                             >
                                 <FontAwesomeIcon icon={faArrowRight} className="text-white text-xl" />
                             </button>
-                        </>
+                        </div>
+                    )}
+
+                    {isMobile && (
+                        <div className="flex justify-center mt-8 gap-2">
+                            {projects.map((_, index) => (
+                                <div
+                                    key={index}
+                                    className={`w-3 h-3 rounded-full transition-all ${index === currentIndex ? 'bg-blue-500 w-6' : 'bg-gray-600'}`}
+                                />
+                            ))}
+                        </div>
                     )}
                 </div>
-
-                {isMobile && (
-                    <div className="flex justify-center mt-8 gap-2">
-                        {projects.map((_, index) => (
-                            <div 
-                                key={index}
-                                className={`w-3 h-3 rounded-full transition-all ${index === currentIndex ? 'bg-blue-500 w-6' : 'bg-gray-600'}`}
-                            />
-                        ))}
-                    </div>
-                )}
-            </div>
-        </section>
+            </section>
 
             {/* About Section */}
             <section id="about" className="relative py-16 container-responsive">
@@ -200,7 +256,7 @@ export default function ProjectsSection() {
                             <span className="relative">Sobre Mí</span>
                         </span>
                     </h2>
-                    
+
                     <div className="bg-gray-800/70 p-6 sm:p-8 rounded-xl backdrop-blur-sm border border-gray-700/50 hover:border-gray-600/50 transition-all">
                         <p className=" text-center text-xl mb-2 text-gray-300">
                             Soy un apasionado desarrollador con conocimientos en tecnologías como React, Node.js y bases de datos.
@@ -208,12 +264,12 @@ export default function ProjectsSection() {
                         <p className="text-center text-xl mb-4 text-gray-300">
                             Me especializo en crear aplicaciones web responsivas, accesibles y con excelente rendimiento.
                         </p>
-                        
+
                         <h3 className="text-center text-lg sm:text-xl font-semibold mt-6 mb-4 text-stone-200 font-heading">Habilidades Técnicas:</h3>
                         <ul className="text-center  text-cyan-300 grid grid-cols-2 sm:grid-cols-3 gap-2">
                             {['JavaScript', 'React', 'Preact', 'Node.js', 'TailwindCSS', 'Git', 'SQL', 'Python', 'AI Integration'].map((skill, i) => (
-                                <li 
-                                    key={i} 
+                                <li
+                                    key={i}
                                     className="bg-gray-700/50 hover:bg-gray-700 px-3 py-2 rounded transition-all hover:shadow-md font-mono text-sm"
                                 >
                                     {skill}
@@ -233,10 +289,9 @@ export default function ProjectsSection() {
                             <span className="relative">Contacto</span>
                         </span>
                     </h2>
-                    
+
                     <div className="flex justify-center space-x-12">
-                        {/* Email */}
-                        <a 
+                        <a
                             href="https://mail.google.com/mail/?view=cm&fs=1&to=jacoboramirezcontacto@gmail.com"
                             target="_blank"
                             rel="noopener noreferrer"
@@ -244,16 +299,15 @@ export default function ProjectsSection() {
                             aria-label="Enviar correo"
                         >
                             <div className="w-20 h-20 flex items-center justify-center bg-black/30 rounded-full group-hover:bg-red-600 transition-all">
-                                <FontAwesomeIcon 
-                                    icon={faEnvelope} 
+                                <FontAwesomeIcon
+                                    icon={faEnvelope}
                                     className="text-black text-5xl group-hover:text-white transition-colors"
                                 />
                             </div>
                             <span className="mt-2 text-gray-300 group-hover:text-white transition-colors">Email</span>
                         </a>
 
-                        {/* WhatsApp */}
-                        <a 
+                        <a
                             href="https://wa.me/573170383544"
                             target="_blank"
                             rel="noopener noreferrer"
@@ -261,8 +315,8 @@ export default function ProjectsSection() {
                             aria-label="WhatsApp"
                         >
                             <div className="w-20 h-20 flex items-center justify-center bg-black/30 rounded-full group-hover:bg-green-500/30 transition-all">
-                                <FontAwesomeIcon 
-                                    icon={faWhatsapp} 
+                                <FontAwesomeIcon
+                                    icon={faWhatsapp}
                                     className="text-black text-5xl group-hover:text-white transition-colors"
                                 />
                             </div>

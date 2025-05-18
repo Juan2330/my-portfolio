@@ -25,12 +25,12 @@ export default function ProjectDetailRana() {
   return (
     <div className="min-h-screen bg-gradient-to-br bg-gray-900/20 text-white font-sans">
       {isModalOpen && (
-        <div 
+        <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90 p-4"
           onClick={closeModal}
         >
           <div className="relative max-w-4xl w-full max-h-[90vh]">
-            <button 
+            <button
               className="absolute -top-10 right-0 text-white hover:text-yellow-300 text-3xl"
               onClick={closeModal}
             >
@@ -70,7 +70,7 @@ export default function ProjectDetailRana() {
           <section className="space-y-4">
             <h2 className="text-2xl font-semibold text-yellow-300 font-heading">Versión Inicial</h2>
             <div className="grid md:grid-cols-2 gap-4">
-              <div 
+              <div
                 className="bg-gray-700 rounded-xl p-2 cursor-pointer"
                 onClick={() => openModal("/La_Rana_Pintada_Platzi.gif")}
               >
@@ -80,7 +80,7 @@ export default function ProjectDetailRana() {
                   className="rounded-lg shadow-md w-full h-64 object-contain bg-gray-900"
                 />
               </div>
-              <div 
+              <div
                 className="bg-gray-700 rounded-xl p-2 cursor-pointer"
                 onClick={() => openModal("/La_Rana_Pintada_Codigo_Platzi.gif")}
               >
@@ -93,11 +93,11 @@ export default function ProjectDetailRana() {
             </div>
             <div className="space-y-2">
               <p className="text-white-300 text-xl">
-                <span className="font-semibold text-yellow-200">Desafíos iniciales:</span> El código combinaba HTML y CSS en un solo archivo, 
+                <span className="font-semibold text-yellow-200">Desafíos iniciales:</span> El código combinaba HTML y CSS en un solo archivo,
                 lo que dificultaba su lectura y mantenimiento.
               </p>
               <p className="text-white-300 text-xl">
-                <span className="font-semibold text-yellow-200">Aprendizaje clave:</span> Cómo consumir la API de Instagram de manera eficiente 
+                <span className="font-semibold text-yellow-200">Aprendizaje clave:</span> Cómo consumir la API de Instagram de manera eficiente
                 y crear una interfaz funcional.
               </p>
             </div>
@@ -107,7 +107,7 @@ export default function ProjectDetailRana() {
           <section className="space-y-4">
             <h2 className="text-2xl font-semibold text-yellow-300 font-heading">Versión Refactorizada</h2>
             <div className="grid md:grid-cols-2 gap-4">
-              <div 
+              <div
                 className="bg-gray-700 rounded-xl p-2 cursor-pointer"
                 onClick={() => openModal("/La_Rana_Pintada.gif")}
               >
@@ -117,7 +117,7 @@ export default function ProjectDetailRana() {
                   className="rounded-lg shadow-md w-full h-64 object-contain bg-gray-900"
                 />
               </div>
-              <div 
+              <div
                 className="bg-gray-700 rounded-xl p-2 cursor-pointer"
                 onClick={() => openModal("/La_Rana_Pintada_Codigo.gif")}
               >
@@ -181,16 +181,16 @@ export default function ProjectDetailRana() {
 
           {/* Section: Links */}
           <section className="pt-4 flex flex-col sm:flex-row gap-4">
-            <a 
-              href="https://la-rana-pintada.vercel.app/" 
+            <a
+              href="https://la-rana-pintada.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
               className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition-all hover:shadow-lg hover:-translate-y-0.5 text-center"
             >
               Ver Proyecto
             </a>
-            <a 
-              href="https://github.com/Juan2330/La-Rana-Pintada" 
+            <a
+              href="https://github.com/Juan2330/La-Rana-Pintada"
               target="_blank"
               rel="noopener noreferrer"
               className="flex-1 bg-gray-700 hover:bg-gray-600 text-white font-medium py-3 px-6 rounded-lg transition-all hover:shadow-lg hover:-translate-y-0.5 text-center"
