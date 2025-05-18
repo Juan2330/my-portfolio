@@ -151,7 +151,7 @@ export default function ProjectsSection() {
                     
                     <div className="bg-gray-800/70 p-6 sm:p-8 rounded-xl backdrop-blur-sm border border-gray-700/50 hover:border-gray-600/50 transition-all">
                         <p className=" text-center text-xl mb-2 text-gray-300">
-                            Soy un apasionado desarrollador con conocimientos en tecnologías como Preact, Node.js y bases de datos.
+                            Soy un apasionado desarrollador con conocimientos en tecnologías como React, Node.js y bases de datos.
                         </p>
                         <p className="text-center text-xl mb-4 text-gray-300">
                             Me especializo en crear aplicaciones web responsivas, accesibles y con excelente rendimiento.
