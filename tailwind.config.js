@@ -10,6 +10,9 @@ module.exports = {
         sans: ['Inter'],
         mono: ['Fira Code'],
       },
+      screens: {
+        '3xl': '1792px',
+      },
     },
   },
   plugins: [],

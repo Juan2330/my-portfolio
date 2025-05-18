@@ -8,6 +8,9 @@ import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 export default function ProjectsSection() {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isAnimating, setIsAnimating] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
+    const [touchStart, setTouchStart] = useState(null);
+    const [touchEnd, setTouchEnd] = useState(null);
     
     const projects = [
         {
@@ -36,6 +39,37 @@ export default function ProjectsSection() {
         },
     ];
 
+    useEffect(() => {
+        const checkIfMobile = () => {
+            setIsMobile(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
+        };
+        checkIfMobile();
+        window.addEventListener('resize', checkIfMobile);
+        return () => window.removeEventListener('resize', checkIfMobile);
+    }, []);
+
+    const handleTouchStart = (e) => {
+        setTouchStart(e.targetTouches[0].clientX);
+    };
+
+    const handleTouchMove = (e) => {
+        setTouchEnd(e.targetTouches[0].clientX);
+    };
+
+    const handleTouchEnd = () => {
+        if (!touchStart || !touchEnd) return;
+        
+        const distance = touchStart - touchEnd;
+        const isLeftSwipe = distance > 50;
+        const isRightSwipe = distance < -50;
+
+        if (isLeftSwipe) nextProject();
+        if (isRightSwipe) prevProject();
+        
+        setTouchStart(null);
+        setTouchEnd(null);
+    };
+
     const nextProject = () => {
         if (isAnimating) return;
         setIsAnimating(true);
@@ -51,7 +85,7 @@ export default function ProjectsSection() {
     };
 
     const getVisibleProjects = () => {
-        return [
+        return isMobile ? [projects[currentIndex]] : [
             projects[currentIndex],
             projects[(currentIndex + 1) % projects.length]
         ];
@@ -62,7 +96,7 @@ export default function ProjectsSection() {
             {/* Hero Section */}
             <section id="hero" className="relative py-20 px-4 sm:px-6 overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-900/5 via-transparent to-purple-900/5 opacity-20"></div>
-                <div className="max-w-6xl mx-auto relative z-10">
+                    <div className="container-responsive relative z-10">
                     <div className="text-center">
                         <h1 className="text-3xl sm:text-5xl font-bold mb-10 font-heading">
                             Hola, soy <span className="text-black/80">Jacobo Ramírez</span>
@@ -98,49 +132,67 @@ export default function ProjectsSection() {
 
             {/* Projects Section */}
             <section id="projects" className="relative py-16 px-4 sm:px-6 bg-gray-800/50 backdrop-blur-sm">
-                <div className="absolute inset-0 bg-grid-small-gray-700/20"></div>
-                <div className="max-w-6xl mx-auto relative z-10">
-                    <h2 className="text-2xl sm:text-3xl font-bold mb-12 text-center font-heading">
-                        <span className="relative inline-block">
-                            <span className="absolute -bottom-1 left-0 w-full h-1 bg-black/60 rounded-full"></span>
-                            <span className="relative">Mis Proyectos</span>
-                        </span>
-                    </h2>
-                    
-                    <div className="relative">
-                        <div className="flex justify-center">
-                            <div className="w-full max-w-5xl">
-                                <div className={`grid grid-cols-2 gap-8 transition-opacity duration-500 ${isAnimating ? 'opacity-70' : 'opacity-100'}`}>
-                                    {getVisibleProjects().map((project, index) => (
-                                        <div key={`${currentIndex}-${index}`} className="w-full">
-                                            <ProjectCard {...project} />
-                                        </div>
-                                    ))}
-                                </div>
+            <div className="container-responsive relative z-10">
+                <h2 className="text-2xl sm:text-3xl font-bold mb-12 text-center font-heading">
+                    <span className="relative inline-block">
+                        <span className="absolute -bottom-1 left-0 w-full h-1 bg-black/60 rounded-full"></span>
+                        <span className="relative">Mis Proyectos</span>
+                    </span>
+                </h2>
+                
+                <div 
+                    className="relative"
+                    onTouchStart={handleTouchStart}
+                    onTouchMove={handleTouchMove}
+                    onTouchEnd={handleTouchEnd}
+                >
+                    <div className={`flex ${isMobile ? 'justify-center' : 'justify-between'} gap-8 transition-opacity duration-500 ${isAnimating ? 'opacity-70' : 'opacity-100'}`}>
+                        {getVisibleProjects().map((project, index) => (
+                            <div 
+                                key={`${currentIndex}-${index}`} 
+                                className={`${isMobile ? 'w-full max-w-md' : 'w-full max-w-2xl'}`}
+                            >
+                                <ProjectCard {...project} />
                             </div>
-                        </div>
-
-                        <button 
-                            onClick={prevProject}
-                            className="absolute left-0 top-1/2 -translate-y-1/2 bg-gray-700/80 hover:bg-gray-600/90 rounded-full w-12 h-12 flex items-center justify-center z-20 transition-all hover:scale-110 shadow-lg"
-                            aria-label="Proyecto anterior"
-                        >
-                            <FontAwesomeIcon icon={faArrowLeft} className="text-white text-xl" />
-                        </button>
-                        
-                        <button 
-                            onClick={nextProject}
-                            className="absolute right-0 top-1/2 -translate-y-1/2 bg-gray-700/80 hover:bg-gray-600/90 rounded-full w-12 h-12 flex items-center justify-center z-20 transition-all hover:scale-110 shadow-lg"
-                            aria-label="Siguiente proyecto"
-                        >
-                            <FontAwesomeIcon icon={faArrowRight} className="text-white text-xl" />
-                        </button>
+                        ))}
                     </div>
+
+                    {!isMobile && (
+                        <>
+                            <button 
+                                onClick={prevProject}
+                                className="absolute -left-16 top-1/2 -translate-y-1/2 bg-gray-700/80 hover:bg-gray-600/90 rounded-full w-12 h-12 flex items-center justify-center z-20 transition-all hover:scale-110 shadow-lg"
+                                aria-label="Proyecto anterior"
+                            >
+                                <FontAwesomeIcon icon={faArrowLeft} className="text-white text-xl" />
+                            </button>
+                            
+                            <button 
+                                onClick={nextProject}
+                                className="absolute -right-16 top-1/2 -translate-y-1/2 bg-gray-700/80 hover:bg-gray-600/90 rounded-full w-12 h-12 flex items-center justify-center z-20 transition-all hover:scale-110 shadow-lg"
+                                aria-label="Siguiente proyecto"
+                            >
+                                <FontAwesomeIcon icon={faArrowRight} className="text-white text-xl" />
+                            </button>
+                        </>
+                    )}
                 </div>
-            </section>
+
+                {isMobile && (
+                    <div className="flex justify-center mt-8 gap-2">
+                        {projects.map((_, index) => (
+                            <div 
+                                key={index}
+                                className={`w-3 h-3 rounded-full transition-all ${index === currentIndex ? 'bg-blue-500 w-6' : 'bg-gray-600'}`}
+                            />
+                        ))}
+                    </div>
+                )}
+            </div>
+        </section>
 
             {/* About Section */}
-            <section id="about" className="relative py-16 px-4 sm:px-6">
+            <section id="about" className="relative py-16 container-responsive">
                 <div className="max-w-4xl mx-auto">
                     <h2 className="text-2xl sm:text-4xl font-bold mb-8 text-center font-heading">
                         <span className="relative inline-block">

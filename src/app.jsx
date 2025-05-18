@@ -11,9 +11,9 @@ export function App() {
   return (
     <div className="min-h-screen relative">
       <AnimatedBackground />
-      <div className="relative z-10"> 
+      <div className="relative z-10 flex flex-col min-h-screen"> 
         <Header />
-        <main>
+        <main className="flex-grow">
           <Router>
             <Home path="/" />
             <ProjectDetailAI path="/proyecto/ai-devguide" />

@@ -2,3 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+.container-responsive {
+    @apply w-full px-4;
+    @apply sm:px-6;
+    @apply lg:px-8;
+    @apply xl:max-w-7xl xl:mx-auto;
+}
+
+.project-card {
+    @apply w-full;
+    @apply md:min-w-[28rem] md:max-w-[32rem];
+    @apply lg:min-w-[32rem] lg:max-w-[36rem];
+    @apply xl:min-w-[36rem] xl:max-w-[40rem];
+}
